@@ -1,0 +1,190 @@
+﻿@using database.Database ;
+@{
+    ViewBag.Title = "Login";
+    Layout = "";
+}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+    <style>
+        .btn-color {
+            background-color: #05639e;
+            color: #FFF;
+            border-color: #f1f3f5;
+        }
+
+            .btn-color:hover,
+            .btn-color:focus,
+            .btn-color:active,
+            .btn-color.active,
+            .open .dropdown-toggle.btn-color {
+                background-color: #5e005e;
+                color: #FFF;
+                border-color: #31347B;
+            }
+
+        .link {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<script>
+    function newpage() {
+        window.location.assign("/Home/List")
+    }
+</script>
+
+<body>
+    <div>
+        <div id="login">
+            <h3 class="text-center text-white pt-5">Login form</h3>
+            <div class="container">
+                <div id="login-row" class="row justify-content-center align-items-center">
+                    <div id="login-column" class="col-md-6">
+                        <div id="login-box" class="col-md-12">
+                            <div class="text-center">
+                                <img src="https://file.sogoodweb.com/upload/555/xHH36ztLXu.png" class="img-fluid "
+                                     alt="..." width="100" height="100">
+                            </div>
+                            <h5 class="text-center text-white pt-1">hello</h5>
+                            <form id="login-form" class="form">
+                                <h3 class="text-center " style="color:black;">ยินดีต้อนรับ</h3>
+                                <h6 class="text-center ">ลงชื่อเข้าใช้งาน,www.B2BThailand.com</h6>
+                                <div class="card text-bg-light mb-3 position-relative col-12 rounded-bottom">
+                                    </br>
+                                    <div class="card-body">
+                                        <div class="form-group">
+
+                                            <input type="text" name="username" id="username" class="form-control"
+                                                   placeholder="ขื่อผู้ใช้หรืออีเมล์" required>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid zip.
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            </br>
+                                            <input type="password" name="password" id="password"
+                                                   class="form-control width:100%" placeholder="รหัสผ่าน" required>
+                                            <div class="invalid-feedback">
+                                                Please provide a valid zip.
+                                            </div>
+                                        </div>
+
+                                        </br>
+                                        <div class="d-grid gap-2 ">
+                                            <button type="button" name="submit" id="Login"
+                                                    class="btn btn-color sticky-md-bottom ">
+                                                เข้าสู่ระบบ
+                                            </button>
+                                        </div>
+
+                                        </br>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="remember-me" style="color:black;">
+                                                        <span>
+                                                            <input id="remember-me" name="remember-me"
+                                                                   type="checkbox"> <span>
+                                                                จำชื่อผู้ใช้
+                                                            </span>
+                                                        </span>
+                                                    </label><br>
+                                                </div>
+
+                                                <div class="col">
+                                                    <div id="register-link" class="text-center">
+                                                        <a href="#" class="link">ลืมรหัสผ่าน?</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div id="register-link" class="text-center ">
+                            <a href="#" class="link">สมัครสมาชิค</a> ,เพื่อเข้าใช้งงาน B2BThai.com
+                        </div>
+                        </br>
+                        <div class="text-center">
+                            <a href="#" class="link">กลับสู่หน้าหลัก</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pleace Try Again</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>UserName or Password invalid</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+    $('#Login').click(function () {
+        var model = {
+            UserName: $('#username').val(),
+            Password: $('#password').val(),
+            IsRemember: $("#remember-me")[0]["checked"]
+        }
+
+        if (model.UserName != "" && model.Password != "") {
+            $.ajax({
+                type: 'POST',
+                url: '/Member/bindlogin',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+
+                    if (e.isResult == true)
+                        window.location = "/Blog/BlogCreate";
+                    else
+                        console.log(e.isResult);
+
+
+                },
+                error: function (e) {
+                    console.log('error')
+                }
+            });
+        } else {
+            $('.modal').show()
+        }
+        $('.modal .btn.btn-secondary').click(function () {
+            $('.modal').hide()
+        })
+        $('.btn-close').click(function () {
+            $('.modal').hide()
+        })
+    })
+</script>

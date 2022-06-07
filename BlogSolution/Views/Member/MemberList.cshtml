@@ -1,0 +1,71 @@
+﻿@using database.Database ;
+@{
+    ViewBag.Title = "MemberList";
+    var Members = (List<tnMember>)ViewBag.Members;
+}
+
+<h2>MemberList</h2>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Password</th>
+                <th scope="col">userstatus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{foreach (var it in Members)
+                {
+                        <tr>
+                            <th scope="row" id="id">@it.MemberID</th>
+                            <td>@it.FirstName</td>
+                            <td>@it.LastName</td>
+                            <td>@it.UserName</td>           
+                            <td>@it.Password</td>
+                            <td>@it.MemberType</td>
+                            
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = it.MemberID }) |
+                                @Html.ActionLink("Detail", "Detail", new { id = it.MemberID }) |
+
+
+                                <button type="button" name="delete" value="@it.MemberID" class="btn-primary btn-delete">delete</button>
+                            </td>
+                        </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $('.btn-delete').click(function () {
+        var model = {
+            GoodsID: $(this).val()
+
+        }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Membere/MemberList',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                    alert("success++++****")
+                    window.location.reload();
+                },
+                error: function (e) {
+
+                }
+            })
+
+    })
+
+</script>
