@@ -13,7 +13,7 @@
           <Property Name="BlogTitle" Type="nvarchar" MaxLength="250" />
           <Property Name="BlogBannerURl" Type="nvarchar" MaxLength="500" />
           <Property Name="BlogDetail" Type="ntext" />
-          <Property Name="CreateByID" Type="int" />
+          <Property Name="CreateByID" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tnMember">
@@ -37,20 +37,9 @@
     <edmx:ConceptualModels>
       <Schema Namespace="db_BlogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="db_BlogEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tnBlogs" EntityType="db_BlogModel.tnBlog" />
           <EntitySet Name="tnMembers" EntityType="db_BlogModel.tnMember" />
+          <EntitySet Name="tnBlogs" EntityType="db_BlogModel.tnBlog" />
         </EntityContainer>
-        <EntityType Name="tnBlog">
-          <Key>
-            <PropertyRef Name="BlogID" />
-          </Key>
-          <Property Name="BlogID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BlogTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="BlogBannerURl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="BlogDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateByID" Type="Int32" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="tnMember">
           <Key>
             <PropertyRef Name="MemberID" />
@@ -63,24 +52,23 @@
           <Property Name="MemberType" Type="Boolean" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tnBlog">
+          <Key>
+            <PropertyRef Name="BlogID" />
+          </Key>
+          <Property Name="BlogID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BlogTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BlogBannerURl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BlogDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="db_BlogModelStoreContainer" CdmEntityContainer="db_BlogEntities">
-          <EntitySetMapping Name="tnBlogs">
-            <EntityTypeMapping TypeName="db_BlogModel.tnBlog">
-              <MappingFragment StoreEntitySet="tnBlog">
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateByID" ColumnName="CreateByID" />
-                <ScalarProperty Name="BlogDetail" ColumnName="BlogDetail" />
-                <ScalarProperty Name="BlogBannerURl" ColumnName="BlogBannerURl" />
-                <ScalarProperty Name="BlogTitle" ColumnName="BlogTitle" />
-                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tnMembers">
             <EntityTypeMapping TypeName="db_BlogModel.tnMember">
               <MappingFragment StoreEntitySet="tnMember">
@@ -91,6 +79,18 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tnBlogs">
+            <EntityTypeMapping TypeName="db_BlogModel.tnBlog">
+              <MappingFragment StoreEntitySet="tnBlog">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateByID" ColumnName="CreateByID" />
+                <ScalarProperty Name="BlogDetail" ColumnName="BlogDetail" />
+                <ScalarProperty Name="BlogBannerURl" ColumnName="BlogBannerURl" />
+                <ScalarProperty Name="BlogTitle" ColumnName="BlogTitle" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

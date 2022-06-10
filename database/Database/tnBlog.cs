@@ -18,7 +18,7 @@ namespace database.Database
         public string BlogTitle { get; set; }
         public string BlogBannerURl { get; set; }
         public string BlogDetail { get; set; }
-        public Nullable<int> CreateByID { get; set; }
+        public string CreateByID { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace BlogSolution
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Blog", action = "BlogCreate", id = UrlParameter.Optional }
+                defaults: new { controller = "Blog", action = "FeedBlog", id = UrlParameter.Optional }
             );
         }
     }

@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var Member = ViewBag.UserStatus;
+    var MemberType = false;
+    if (Member != null)
+    {
+        MemberType = Member.MemberType;
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,10 +31,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("FeedBlog", "FeedBlog", "Blog")</li>
+                    <li>@Html.ActionLink("CreateBlog", "BlogCreate", "Blog")</li>
+
+                    @if (MemberType)
+                    {
+                        <li>@Html.ActionLink("Member", "MemberList", "Member")</li>
+                        <li>@Html.ActionLink("MemberCreate", "Register", "Member")</li>
+                    }
                 </ul>
+                <button class="btn-danger" id="logout" style="float: right">Logout</button>
             </div>
         </div>
     </div>
@@ -37,7 +52,27 @@
         </footer>
     </div>
 
-    
+
     @RenderSection("scripts", required: false)
+    <script>
+    $('#logout').click(() => {
+        $.ajax({
+            type: 'POST',
+            url: '/Member/bindlogout',
+            data: true,
+            datatype: Boolean,
+
+            traditional: true,
+            async: false,
+            success: function (e) {
+                alert("success++++****")
+                window.location.assign('/Member/Login');
+            },
+            error: function (e) {
+
+            }
+        })
+    })
+    </script>
 </body>
 </html>

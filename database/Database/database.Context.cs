@@ -25,7 +25,7 @@ namespace database.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tnBlog> tnBlogs { get; set; }
         public virtual DbSet<tnMember> tnMembers { get; set; }
+        public virtual DbSet<tnBlog> tnBlogs { get; set; }
     }
 }

@@ -28,13 +28,15 @@ namespace BlogSolution.Models.Bussiness.Member
             var dataUser = qDB.tnMembers.Where(w => w.UserName == UserName && w.Password == Password).FirstOrDefault();
             if (dataUser != null)
             {
-                user.UserID = dataUser.MemberID;
+                user.MemberID = dataUser.MemberID;
                 user.UserName = dataUser.UserName;
                 user.MemberType = Convert.ToBoolean(dataUser.MemberType);
+                user.FirstName = dataUser.FirstName;
+                user.LastName = dataUser.LastName;
             }
             else
             {
-                user.UserID = null;
+                user.MemberID = null;
                 user.UserName = null;
                 return user = null;
             }
@@ -48,6 +50,9 @@ namespace BlogSolution.Models.Bussiness.Member
             data.MemberType = model.MemberType;
             data.UserName = model.UserName;
             data.Password = model.Password;
+            data.FirstName = model.FirstName;
+            data.LastName = model.LastName;
+            data.Email = model.Email;
             saveDefault<tnMember>(data);
 
             return data;
@@ -61,12 +66,11 @@ namespace BlogSolution.Models.Bussiness.Member
             data.Password = model.Password;
             qDB.Entry(data).State = EntityState.Modified;
             qDB.SaveChanges();
-
             return data;
         }
         public bool bindDelete(string MemberID)
         {
-            sqlCommandExcute("DELETE From smUser where MemberID = '" + MemberID + "'");
+            sqlCommandExcute("DELETE From tnMember where MemberID = '" + MemberID + "'");
 
             return isResult;
         }

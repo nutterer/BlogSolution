@@ -25,8 +25,11 @@ namespace BlogSolution.Sevice
                 {
                     #region UserStatus
                     UserStatus.UserName = ckAuth["UserName"];
-                    UserStatus.UserID = ckAuth["UserID"];
+                    UserStatus.MemberID = ckAuth["MemberID"];
                     UserStatus.MemberType = Convert.ToBoolean(ckAuth["MemberType"]);
+                    UserStatus.FirstName = ckAuth["FirstName"];
+                    UserStatus.LastName = ckAuth["LastName"];
+
                     #endregion
                 }
                 else
@@ -53,8 +56,10 @@ namespace BlogSolution.Sevice
                 {
                     #region UserStatus
                     UserStatus.UserName = ckAuth["UserName"];
-                    UserStatus.UserID = ckAuth["UserID"];
+                    UserStatus.MemberID = ckAuth["MemberID"];
                     UserStatus.MemberType = Convert.ToBoolean(ckAuth["MemberType"]);
+                    UserStatus.FirstName = ckAuth["FirstName"];
+                    UserStatus.LastName = ckAuth["LastName"];
                     #endregion 
                 }
                 else

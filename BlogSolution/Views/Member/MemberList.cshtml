@@ -30,8 +30,8 @@
                             <td>@it.MemberType</td>
                             
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = it.MemberID }) |
-                                @Html.ActionLink("Detail", "Detail", new { id = it.MemberID }) |
+                                @Html.ActionLink("Edit", "EditMember", new { id = it.MemberID }) |
+                                
 
 
                                 <button type="button" name="delete" value="@it.MemberID" class="btn-primary btn-delete">delete</button>
@@ -45,13 +45,13 @@
 <script>
     $('.btn-delete').click(function () {
         var model = {
-            GoodsID: $(this).val()
+            MemberID: $(this).val()
 
         }
 
             $.ajax({
                 type: 'POST',
-                url: '/Membere/MemberList',
+                url: '/Member/bindDelete',
                 data: JSON.stringify(model),
                 datatype: "json",
                 contentType: 'application/json;',

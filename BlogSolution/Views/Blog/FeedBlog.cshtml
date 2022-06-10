@@ -1,0 +1,99 @@
+﻿@using database.Database ; 
+@using BlogSolution.Models.ModelApp.Base ;
+@{
+    ViewBag.Title = "FeedBlog";
+    var Blog = (List<tnBlog>)ViewBag.Blog;
+    var Member = (UserCookiesModel)ViewBag.UserStatus;
+    var Members = (List<tnMember>)ViewBag.Member;
+}
+
+<h2>FeedBlog</h2>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">BlogTitle</th>
+                <th scope="col">CreatebyID</th>
+                <th scope="col">BannerURl</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{foreach (var it in Blog)
+                {
+                    <tr>
+                        <th scope="row" id="id">@it.BlogID</th>
+                        <td>@it.BlogTitle</td>
+                        <td>@it.CreateByID</td>
+                        <td><a href="@it.BlogBannerURl">Url</a> | @it.BlogTitle</td>
+                        <td>@it.CreateDate </td>
+                        <td>@Model</td>
+                        <td>
+                            @{
+                                try
+                                {
+                                    if (Member.MemberType == true)
+                                    {
+                                        @Html.ActionLink("Edit", "EditFeed", new { id = it.BlogID }) ; <a> | </a>
+                                        @Html.ActionLink("Detail", "Detail", new { id = it.BlogID , idd = it.CreateByID }); <a> | </a>
+                                        <button type="button" name="delete" value="@it.BlogID" class="btn-primary btn-delete">delete</button>
+                                    }
+                                    else if (Member.MemberType == false)
+                                    {
+                                        if (Member.MemberID == it.CreateByID)
+                                        {
+                                            @Html.ActionLink("Edit", "EditFeed", new { id = it.BlogID }) ; <a> | </a>
+                                            @Html.ActionLink("Detail", "Detail", new { id = it.BlogID ,idd = it.CreateByID }); <a> | </a>
+                                            <button type="button" name="delete" value="@it.BlogID" class="btn-primary btn-delete">delete</button>
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Detail", "Detail", new { id = it.BlogID, idd = it.CreateByID }); <a> | </a>
+                                        }
+                                    }
+                                }catch (Exception)
+                                    {
+                                       
+                                    }
+
+                            }
+
+
+
+
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $('.btn-delete').click(function () {
+        var model = {
+            BlogID: $(this).val()
+
+        }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Blog/bindDelete',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                    alert("success++++****")
+                    window.location.reload();
+                },
+                error: function (e) {
+
+                }
+            })
+
+    })
+
+</script>

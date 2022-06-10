@@ -1,4 +1,6 @@
 ﻿using BlogSolution.Models.Bussiness.Connection;
+using BlogSolution.Models.ModelApp.Base;
+using BlogSolution.Sevice;
 using database.Database;
 using System;
 using System.Collections.Generic;
@@ -11,10 +13,13 @@ namespace BlogSolution.Models.Bussiness.Base
     {
         public db_BlogEntities qDB;
         public bool isResult = true;
-
+        public UserCookiesModel UserStatus = new UserCookiesModel();
         #region Contructor
         public BaseBC() 
         {
+            UserStatus = null;
+            var _baseCtl = new BaseSecurityController();
+            UserStatus = _baseCtl.GetCookiesAuth();
             ConnectionBC bc = new ConnectionBC();
             qDB = bc.GetConnection();
              if (qDB != null)

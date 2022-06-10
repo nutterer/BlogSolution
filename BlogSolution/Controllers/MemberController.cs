@@ -16,24 +16,29 @@ namespace BlogSolution.Controllers
 
         {
             var MemberID = "";
-            if (!UserStatus.MemberType)
-            {
-                return Redirect("~/Home/index");
-            }
+            
             ViewBag.Members = bc.getMember(MemberID);
-
 
             return View();
         }
         
         public ActionResult Login()
         {
+            
             return View();
         }
-        public ActionResult Register()
+       
+        public ActionResult Register(string id)
         {
+            ViewBag.user = mbc.getMember(id).FirstOrDefault();
             return View();
         }
-        
+        [SetDefaultContent]
+        public ActionResult EditMember(string id)
+        {
+            ViewBag.user = mbc.getMember(id).FirstOrDefault();
+            return View();
+            
+        }
     }
 }

@@ -1,7 +1,72 @@
-﻿
+﻿@using database.Database;
 @{
     ViewBag.Title = "BlogCreate";
+    var Members = (tnMember)ViewBag.user ;
 }
 
 <h2>BlogCreate</h2>
 
+<div class="container row">
+    <div class="form-outline col-lg-6">
+        <label class="form-label" for="detail">blog Detail</label>
+        <textarea class="form-control" id="detail" rows="12"></textarea>
+
+    </div>
+    <div class="form-outline col-lg-6 clearfix">
+        <label class="form-label" for="title">Blog Title</label>
+        <input type="text" id="title" class="form-control form-icon-trailing" />
+        <div class="invalid-tooltip" id="v" hidden>
+            กรุณากรอกข้อมูล
+        </div>
+        <label class="form-label" for="banner">Blog Banner</label>
+        <input type="text" id="banner" class="form-control form-icon-trailing" />
+        <label class="form-label" for="byId">CreatebyID</label>
+        <input type="text" id="byId" class="form-control form-icon-trailing" value="@Members.MemberID" disabled />
+        <label class="form-label" for="dateTime">Create Date</label>
+        <input type="datetime-local" id="dateTime" class="form-control form-icon-trailing" />
+        <div class="invalid-tooltip" id="v1" hidden>
+            กรุณากรอกข้อมูล
+        </div>
+        </br>
+        <button class="form-control btn-success " style="margin-top : auto" id="create">Create</button>
+    </div>
+    
+</div>
+<script>
+    
+    $('#create').click(function () {
+        var model = {
+            BlogTitle: $('#title').val(),
+            BlogBannerURL: $('#banner').val(),
+            BlogDetail: $('#detail').val(),
+            CreateDate: $('#dateTime').val(),
+            CreateByID: $('#byId').val(),
+        }
+        if (model.BlogTitle != "" && model.CreateDate != "") {
+            $.ajax({
+                type: 'POST',
+                url: '/Blog/bindSave',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                    alert("success++++****")
+                },
+                error: function (e) {
+
+                }
+            });
+        } else if (model.BlogTitle == "" && model.CreateDate != "") {
+            $('#v').show()
+        } else if (model.CreateDate == "" && model.BlogTitle != "") {
+            $('#v1').show()
+        }
+        else {
+            $('#v').show()
+            $('#v1').show()
+        }
+       
+    })
+</script>

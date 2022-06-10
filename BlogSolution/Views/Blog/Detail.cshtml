@@ -1,0 +1,37 @@
+﻿@using database.Database ;
+@using BlogSolution.Models.ModelApp.Base ;
+@{
+    ViewBag.Title = "Detail";
+    var Blog = (tnBlog)ViewBag.Blog;
+   
+    var Members = (tnMember)ViewBag.user;
+}
+
+<h2 style="text-decoration-style: wavy; text-decoration-line: underline; margin-left: 12px; "> @Blog.BlogTitle</h2>
+
+<div class="container-fluid">
+    <div class="row" style="margin-left: 0" >
+        <img src="@Blog.BlogBannerURl"  style="display: block; margin-left: auto; margin-right: auto; width: 25%; margin-bottom: auto; padding-bottom :50px ;padding-top :50px ; " />
+    </div>
+    <div>
+        @Blog.BlogDetail
+    </div>
+    <div class="row">
+        <h4 style="float:right">Create by</h4> 
+        
+    </div>
+    <div class="row">
+        @{
+            if (Members != null)
+            {
+                <a style="float:right"> @Members.FirstName | @Blog.CreateDate</a>
+            }
+            else
+            {
+                <p style="float:right">User has been delete</p>
+            }
+        }
+
+    </div>
+    
+</div>

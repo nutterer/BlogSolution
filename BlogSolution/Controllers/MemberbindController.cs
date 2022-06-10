@@ -1,4 +1,5 @@
 ﻿using BlogSolution.Models.Bussiness.Member;
+using database.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +22,42 @@ namespace BlogSolution.Controllers
                 {
                     AddCookiesAuth(user, IsRemember);
                     mbc.isResult = true;
-
                 }
                 return Json(new { isResult = mbc.isResult });
-
-
             }
             catch (Exception)
             {
                 return Json(new { isResult = mbc.isResult });
             }
         }
+        public ActionResult bindlogout ()
+        {
+            RemoveCookiesAuth();
+            return Redirect("~/Member/Login");
+        }
         public ActionResult bindregister()
         {
             return View();
+        }
+        public ActionResult bindEdit(tnMember model)
+        {
+            var Member = mbc.bindEdit(model);
+            return Json(new { data = Member });
+        }
+        [HttpPost]
+        public ActionResult bindSave(tnMember model)
+        {
+
+            var Member = mbc.bindSave(model);
+
+            return Json(new { data = Member });
+        }
+        [HttpPost]
+        public ActionResult bindDelete(string MemberID)
+        {
+
+            var Member = mbc.bindDelete(MemberID);
+            return Json(new { data = Member });
         }
     }
 }

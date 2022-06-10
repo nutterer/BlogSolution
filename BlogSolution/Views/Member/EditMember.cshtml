@@ -1,0 +1,110 @@
+﻿@using database.Database ;
+@{
+
+    ViewBag.Title = "EditMember";
+    var MemberData = (tnMember)ViewBag.user;
+}
+
+<h2>EditMember</h2>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Password</th>
+                <th scope="col">adminstatus</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>
+                    <input class="form-control" type="text" id="id" placeholder"" value="@MemberData.MemberID" disabled />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="fName" placeholder="name" value="@MemberData.FirstName" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="lName" placeholder="name" value="@MemberData.LastName" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Name" placeholder="name" value="@MemberData.UserName" />
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="Password" placeholder="price" value="@MemberData.Password" />
+                </td>
+                <td>
+
+                    <select class="form-control" name="IsAdmin" id="IsAdmin" placeholder="@MemberData.MemberType ">
+                        @if (MemberData.MemberType == true)
+                        {
+                            <option value="True" selected="selected">True</option>
+
+                            <option value="False">False</option>
+                        }
+                        else
+                        {
+                            <option value="True">True</option>
+
+                            <option value="False" selected="selected">False</option>
+                        }
+
+
+
+                    </select>
+
+
+                </td>
+
+                <td>
+
+                    <button id="save" type="button" class="form-control btn-success">Save</button>
+                </td>
+            </tr>
+
+
+
+        </tbody>
+    </table>
+</div>
+<script>
+
+
+    $('#save').click(function () {
+        var model = {
+            MemberID: $('#id').val(),
+            MemberType: $('#IsAdmin').val(),
+            UserName: $('#Name').val(),
+            Password: $('#Password').val(),
+            FirstName: $('fName').val(),
+            LastName: $('lNAme').val()
+        }
+        if (true) {
+            $.ajax({
+                type: 'POST',
+                url: '/Member/bindEdit',
+                data: JSON.stringify(model),
+                datatype: "json",
+                contentType: 'application/json;',
+                traditional: true,
+                async: false,
+                success: function (e) {
+                    alert("success++++****")
+                    window.location.assign('/Member/MemberList')
+                },
+                error: function (e) {
+                    console.log(model)
+                }
+            });
+        }
+        else {
+            alert("plz typing input name and No")
+        }
+
+
+    })
+
+</script>

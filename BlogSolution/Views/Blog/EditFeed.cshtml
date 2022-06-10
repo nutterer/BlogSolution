@@ -1,0 +1,60 @@
+﻿@using database.Database ;
+@{
+    ViewBag.Title = "EditFeed";
+    var Blog = (tnBlog)ViewBag.Blog;
+}
+}
+
+<h2>EditFeed</h2>
+<div class="container row">
+    <div class="form-outline col-lg-6">
+        <label class="form-label" for="detail">blog Detail</label>
+        <textarea class="form-control" id="detail" rows="12" value="">@Blog.BlogDetail</textarea>
+    </div>
+    <div class="form-outline col-lg-6 clearfix">
+        <label class="form-label" for="byId">Blog ID</label>
+        <input type="text" id="BlogId" class="form-control form-icon-trailing" value="@Blog.BlogID" disabled />
+        <label class="form-label" for="title">Blog Title</label>
+        <input type="text" id="title" class="form-control form-icon-trailing" value="@Blog.BlogTitle" />
+        <label class="form-label" for="banner">Blog Banner</label>
+        <input type="text" id="banner" class="form-control form-icon-trailing" value="@Blog.BlogBannerURl" />
+        <label class="form-label" for="byId">CreatebyID</label>
+        <input type="text" id="byId" class="form-control form-icon-trailing" value="@Blog.CreateByID" disabled />
+        
+        </br>
+        <button class="form-control btn-success " style="margin-top : auto" id="save">Save</button>
+    </div>
+
+</div>
+<script>
+
+    $('#dateTime').val('@Blog.CreateDate').show()
+    $('#save').click(function () {
+
+
+        var model = {
+            BlogTitle: $('#title').val(),
+            BlogBannerURL: $('#banner').val(),
+            BlogDetail: $('#detail').val(),
+            
+            CreateByID: $('#byId').val(),
+            BlogID: $('#BlogId').val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Blog/bindEdit',
+            data: JSON.stringify(model),
+            datatype: "json",
+            contentType: 'application/json;',
+            traditional: true,
+            async: false,
+            success: function (e) {
+                alert("success++++****")
+            },
+            error: function (e) {
+
+            }
+        });
+    })
+</script>

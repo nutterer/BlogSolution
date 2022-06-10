@@ -118,7 +118,7 @@
                             </form>
                         </div>
                         <div id="register-link" class="text-center ">
-                            <a href="#" class="link">สมัครสมาชิค</a> ,เพื่อเข้าใช้งงาน B2BThai.com
+                            <a>@Html.ActionLink("สมัครสมาชิค", "Register", "Member")</a>
                         </div>
                         </br>
                         <div class="text-center">
@@ -169,7 +169,7 @@
                     if (e.isResult == true)
                         window.location = "/Blog/BlogCreate";
                     else
-                        console.log(e.isResult);
+                        $('.modal').show()
 
 
                 },

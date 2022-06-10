@@ -126,6 +126,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BlogbindController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberbindController.cs" />
@@ -134,6 +135,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Bussiness\Base\BaseBC.cs" />
+    <Compile Include="Models\Bussiness\Blog\BlogBC.cs" />
     <Compile Include="Models\Bussiness\Connection\ConnectionBC.cs" />
     <Compile Include="Models\Bussiness\Member\MemberBC.cs" />
     <Compile Include="Models\ModelApp\Base\BaseModel.cs" />
@@ -182,9 +184,15 @@
     <Content Include="Views\Member\MemberList.cshtml" />
     <Content Include="Views\Member\Login.cshtml" />
     <Content Include="Views\Member\Register.cshtml" />
+    <Content Include="Views\Member\EditMember.cshtml" />
+    <Content Include="Views\Blog\FeedBlog.cshtml" />
+    <Content Include="Views\Blog\EditFeed.cshtml" />
+    <Content Include="Views\Blog\Detail.cshtml" />
+    <Content Include="Views\Shared\MasterpageRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Blogbind\" />
     <Folder Include="Views\Memberbind\" />
   </ItemGroup>
   <ItemGroup>

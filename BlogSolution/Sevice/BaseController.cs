@@ -30,8 +30,10 @@ namespace System.Web.Mvc
                 HttpCookie ckAuth = new HttpCookie("aaaa");
 
                 ckAuth.Values["UserName"] = model.UserName;
-                ckAuth.Values["UserID"] = model.UserID;
+                ckAuth.Values["MemberID"] = model.MemberID;
                 ckAuth.Values["MemberType"] = model.MemberType.ToString();
+                ckAuth.Values["FirstName"] = model.FirstName;
+                ckAuth.Values["LastName"] = model.LastName;
 
                 if (IsRemember)
                     ckAuth.Expires = DateTime.Now.AddDays(365);
@@ -83,8 +85,10 @@ namespace System.Web.Mvc
                     {
                         #region UserStatus
                         UserStatus.UserName = ckAuth["UserName"];
-                        UserStatus.UserID = ckAuth["UserID"];
+                        UserStatus.MemberID = ckAuth["MemberID"];
                         UserStatus.MemberType = Convert.ToBoolean(ckAuth["MemberType"]);
+                        UserStatus.FirstName = ckAuth["FirstName"];
+                        UserStatus.LastName = ckAuth["LastName"];
                         #endregion
                     }
                     else
