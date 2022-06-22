@@ -71,40 +71,75 @@
     </table>
 </div>
 <script>
-
-
     $('#save').click(function () {
         var model = {
             MemberID: $('#id').val(),
             MemberType: $('#IsAdmin').val(),
             UserName: $('#Name').val(),
             Password: $('#Password').val(),
-            FirstName: $('fName').val(),
-            LastName: $('lNAme').val()
+            FirstName: $('#fName').val(),
+            LastName: $('#lName').val()
         }
-        if (true) {
-            $.ajax({
-                type: 'POST',
-                url: '/Member/bindEdit',
-                data: JSON.stringify(model),
-                datatype: "json",
-                contentType: 'application/json;',
-                traditional: true,
-                async: false,
-                success: function (e) {
-                    alert("success++++****")
-                    window.location.assign('/Member/MemberList')
-                },
-                error: function (e) {
-                    console.log(model)
-                }
-            });
-        }
-        else {
-            alert("plz typing input name and No")
-        }
+        
+        if (model.MemberType && model.FirstName && model.UserName && model.Password && model.LastName != "") {
+            //if (model.UserName = $('#Name').val()) {
+            //    $.ajax({
+            //        type: 'POST',
+            //        url: '/Member/bindEdit',
+            //        data: JSON.stringify(model),
+            //        datatype: "json",
+            //        contentType: 'application/json;',
+            //        traditional: true,
+            //        async: false,
+            //        success: function (e) {
+            //            alert("success++++****")
+            //            window.location.assign('/Member/MemberList')
+            //        },
+            //        error: function (e) {
+            //            console.log(model)
+            //        }
+            //    });
+            //} else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Member/checkUserName',
+                    data: JSON.stringify(model),
+                    datatype: "json",
+                    contentType: 'application/json;',
+                    traditional: true,
+                    async: false,
+                    success: function (e) {
+                        if (e.isResult) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Member/bindEdit',
+                                data: JSON.stringify(model),
+                                datatype: "json",
+                                contentType: 'application/json;',
+                                traditional: true,
+                                async: false,
+                                success: function (e) {
+                                    alert("success++++****")
+                                    window.location.assign('/Member/MemberList')
+                                },
+                                error: function (e) {
+                                    console.log(model)
+                                }
+                            });
+                        }
+                        else {
+                            $('#UserName').val('')
+                            alert('UserName มีการใฃ้เเล้วโปรดกรอกใหม่')
 
-
+                            console.log("Username ซ้ำกับในระบบ")
+                        }
+                    }
+                })
+            }
+           
+        //} else {
+        //    alert('กรุณากรอกข้อมุลให้ครบถ้วน')
+        //}
+        
     })
-
 </script>

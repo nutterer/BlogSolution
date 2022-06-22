@@ -27,5 +27,6 @@ namespace database.Database
     
         public virtual DbSet<tnMember> tnMembers { get; set; }
         public virtual DbSet<tnBlog> tnBlogs { get; set; }
+        public virtual DbSet<view_tnBlog> view_tnBlog { get; set; }
     }
 }

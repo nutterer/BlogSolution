@@ -1,4 +1,5 @@
 ﻿@using BlogSolution.Models.ModelApp.Base ;
+@using database.Database ; 
 @{
     ViewBag.Title = "Register";
     var Member = (UserCookiesModel)ViewBag.UserStatus;
@@ -18,7 +19,7 @@
     <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
     <style>
         body {
-            background: url('https://static-communitytable.parade.com/wp-content/uploads/2014/03/rethink-target-heart-rate-number-ftr.jpg') fixed;
+            background: url('https://cdn.custom-cursor.com/packs/3475/meme-pop-cat-pack.png') fixed;
             background-size: cover;
         }
 
@@ -44,6 +45,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="~/Member/MemberList">กลับสู่หน้าหลัก</a>
         <form class="form-horizontal needs-validation" role="form">
             <h2>Registration</h2>
             <div class="form-group">
@@ -88,26 +90,42 @@
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
             </div>
+            @{
+                if (Member != null && Member.MemberType == true)
+                {
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">admin status*</label>
+                        <div class="col-sm-6">
+                            <div class="row" id="MemberType">
+                                <div class="col-sm-4">
+                                    <label class="radio-inline">
+                                        <input type="radio" id="isadmin" name="MemberType" value="true">admin
+                                    </label>
 
-            <div class="form-group">
-                <label class="control-label col-sm-3">admin status*</label>
-                <div class="col-sm-6">
-                    <div class="row" id="MemberType">
-                        <div class="col-sm-4">
-                            <label class="radio-inline">
-                                <input type="radio" id="isadmin" name="MemberType" value="true">admin
-                            </label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="radio-inline">
+                                        <input type="radio" id="notadmin" name="MemberType" value="false">normal
+                                    </label>
 
-                        </div>
-                        <div class="col-sm-4">
-                            <label class="radio-inline">
-                                <input type="radio" id="notadmin" name="MemberType" value="false">normal
-                            </label>
-
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div> <!-- /.form-group -->
+
+                }
+                else
+                {
+                    <label class="control-label col-sm-3">เจ้ายินยอมที่จะสมัคร บ่ ?</label>
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" id="notadmin" name="MemberType" value="false">ยินยอม
+                        </label>
+
+                    </div>
+                }
+            }
+            <!-- /.form-group -->
 
 
             <div class="form-group">
@@ -116,7 +134,9 @@
                 </div>
             </div>
             <button type="button" id="save" class="btn btn-primary btn-block">Register</button>
+
         </form> <!-- /form -->
+
     </div> <!-- ./container -->
     <script>
         (function () {
@@ -135,6 +155,7 @@
                 });
             }, false);
         })();
+
         $('#save').click(function () {
             var model = {
                 FirstName: $('#firstName').val(),
@@ -146,27 +167,46 @@
             }
 
             if (model.FirstName && model.LastName && model.UserName && model.Email && model.Password != "") {
+
                 $.ajax({
                     type: 'POST',
-                    url: '/Member/bindSave',
+                    url: '/Member/checkUserName',
                     data: JSON.stringify(model),
                     datatype: "json",
                     contentType: 'application/json;',
                     traditional: true,
                     async: false,
                     success: function (e) {
+                        if (e.isResult) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Member/bindSave',
+                                data: JSON.stringify(model),
+                                datatype: "json",
+                                contentType: 'application/json;',
+                                traditional: true,
+                                async: false,
+                                success: function (e) {
 
-                        if (document.cookie != "") {
-                            alert("success++++****")
-                            window.location = "/Member/MemberList";
+                                    if (document.cookie != "") {
+                                        alert("success++++****")
+                                        window.location = "/Member/MemberList";
+                                    } else {
+                                        alert("You should login")
+                                        window.location = "/Member/Login";
+                                    }
+
+                                },
+                                error: function (e) {
+
+                                }
+                            })
                         } else {
-                            alert("You should login")
-                            window.location = "/Member/Login";
+                            $('#UserName').val('')
+                            alert('UserName มีการใฃ้เเล้วโปรดกรอกใหม่')
+                            
+                            console.log("Username ซ้ำกับในระบบ")
                         }
-
-                    },
-                    error: function (e) {
-
                     }
                 })
             } else {

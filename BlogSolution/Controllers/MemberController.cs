@@ -1,4 +1,5 @@
 ﻿using BlogSolution.Models.Bussiness.Member;
+using database.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace BlogSolution.Controllers
         public ActionResult MemberList()
 
         {
+            if (UserStatus.MemberType != true)
+            {
+                return Redirect("~/Blog/FeedBlog");
+            }
             var MemberID = "";
             
             ViewBag.Members = bc.getMember(MemberID);
@@ -30,15 +35,21 @@ namespace BlogSolution.Controllers
        
         public ActionResult Register(string id)
         {
+            
             ViewBag.user = mbc.getMember(id).FirstOrDefault();
             return View();
         }
         [SetDefaultContent]
         public ActionResult EditMember(string id)
         {
+            if(UserStatus.MemberType != true)
+            {
+                return Redirect("~/Blog/FeedBlog");
+            }
             ViewBag.user = mbc.getMember(id).FirstOrDefault();
             return View();
             
         }
+        
     }
 }

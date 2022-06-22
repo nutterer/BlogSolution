@@ -1,9 +1,9 @@
-﻿@using database.Database ;
+﻿@using database.Database 
 @{
     ViewBag.Title = "EditFeed";
-    var Blog = (tnBlog)ViewBag.Blog;
+    var Blog = (view_tnBlog)ViewBag.Blog;
 }
-}
+
 
 <h2>EditFeed</h2>
 <div class="container row">
@@ -17,10 +17,10 @@
         <label class="form-label" for="title">Blog Title</label>
         <input type="text" id="title" class="form-control form-icon-trailing" value="@Blog.BlogTitle" />
         <label class="form-label" for="banner">Blog Banner</label>
-        <input type="text" id="banner" class="form-control form-icon-trailing" value="@Blog.BlogBannerURl" />
+        <input type="file" id="banner" class="form-control form-icon-trailing" accept="image/png, image/jpeg"  name="postedFile"/>
         <label class="form-label" for="byId">CreatebyID</label>
         <input type="text" id="byId" class="form-control form-icon-trailing" value="@Blog.CreateByID" disabled />
-        
+
         </br>
         <button class="form-control btn-success " style="margin-top : auto" id="save">Save</button>
     </div>
@@ -28,33 +28,46 @@
 </div>
 <script>
 
-    $('#dateTime').val('@Blog.CreateDate').show()
+    
     $('#save').click(function () {
 
-
-        var model = {
-            BlogTitle: $('#title').val(),
-            BlogBannerURL: $('#banner').val(),
-            BlogDetail: $('#detail').val(),
+        var model = new FormData();
+        model.append("postedFile", $('#banner')[0].files[0]);
+       
+        model.append("BlogTitle", $('#title').val());
+        model.append("BlogBannerURL", $('#banner').val());
+        model.append("BlogDetail", $('#detail').val());
+        model.append("BlogID", $('#BlogId').val());
+        model.append("CreateByID", $('#byId').val());
+        //var model = {
+        //    BlogTitle: $('#title').val(),
+        //    BlogBannerURL: $('#banner').val(),
+        //    BlogDetail: $('#detail').val(),
             
-            CreateByID: $('#byId').val(),
-            BlogID: $('#BlogId').val()
+        //    CreateByID: $('#byId').val(),
+        //    BlogID: $('#BlogId').val()
+        //}
+        if ($('#title').val() != '' && $('#banner').val() != '') {
+            $.ajax({
+                type: 'POST',
+                url: '/Blog/bindEdit',
+                data: model,
+                datatype: "json",
+                contentType: 'application/json;',
+                async: false,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    alert("success++++****")
+                    window.location.assign('/Blog/FeedBlog')
+                },
+                error: function (e) {
+
+                }
+            });
+        } else {
+            alert('data is not valid')
         }
-
-        $.ajax({
-            type: 'POST',
-            url: '/Blog/bindEdit',
-            data: JSON.stringify(model),
-            datatype: "json",
-            contentType: 'application/json;',
-            traditional: true,
-            async: false,
-            success: function (e) {
-                alert("success++++****")
-            },
-            error: function (e) {
-
-            }
-        });
+       
     })
 </script>

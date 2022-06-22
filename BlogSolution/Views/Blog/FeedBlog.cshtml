@@ -1,10 +1,9 @@
-﻿@using database.Database ; 
-@using BlogSolution.Models.ModelApp.Base ;
+﻿@using database.Database  
+@using BlogSolution.Models.ModelApp.Base 
 @{
     ViewBag.Title = "FeedBlog";
-    var Blog = (List<tnBlog>)ViewBag.Blog;
+    var Blog = (List<view_tnBlog>)ViewBag.Blog;
     var Member = (UserCookiesModel)ViewBag.UserStatus;
-    var Members = (List<tnMember>)ViewBag.Member;
 }
 
 <h2>FeedBlog</h2>
@@ -18,6 +17,7 @@
                 <th scope="col">CreatebyID</th>
                 <th scope="col">BannerURl</th>
                 <th scope="col">Date</th>
+                <th scope="col"><a href="~/Blog/BlogCreate">+</a></th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@
                                     {
                                         if (Member.MemberID == it.CreateByID)
                                         {
-                                            @Html.ActionLink("Edit", "EditFeed", new { id = it.BlogID }) ; <a> | </a>
+                                            @Html.ActionLink("Edit", "EditFeed", new { id = it.BlogID ,oid = it.CreateByID }) ; <a> | </a>
                                             @Html.ActionLink("Detail", "Detail", new { id = it.BlogID ,idd = it.CreateByID }); <a> | </a>
                                             <button type="button" name="delete" value="@it.BlogID" class="btn-primary btn-delete">delete</button>
                                         }

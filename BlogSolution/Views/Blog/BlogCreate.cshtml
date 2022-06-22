@@ -1,7 +1,11 @@
 ﻿@using database.Database;
+
 @{
     ViewBag.Title = "BlogCreate";
-    var Members = (tnMember)ViewBag.user ;
+
+    var Members = (tnMember)ViewBag.user;
+
+    
 }
 
 <h2>BlogCreate</h2>
@@ -18,8 +22,18 @@
         <div class="invalid-tooltip" id="v" hidden>
             กรุณากรอกข้อมูล
         </div>
-        <label class="form-label" for="banner">Blog Banner</label>
-        <input type="text" id="banner" class="form-control form-icon-trailing" />
+        <div>
+            @using (Html.BeginForm("BlogCreate", "Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <label class="form-label" for="banner">Blog Banner</label>
+                <input type="file" id="banner" name="postedFile" class="form-control form-icon-trailing" accept="image/png, image/jpeg"/>
+                <div class="invalid-tooltip" id="v3" hidden>
+                    input file name is not valid ;
+                </div>
+                
+            }
+        </div>
+
         <label class="form-label" for="byId">CreatebyID</label>
         <input type="text" id="byId" class="form-control form-icon-trailing" value="@Members.MemberID" disabled />
         <label class="form-label" for="dateTime">Create Date</label>
@@ -27,42 +41,56 @@
         <div class="invalid-tooltip" id="v1" hidden>
             กรุณากรอกข้อมูล
         </div>
-        </br>
-        <button class="form-control btn-success " style="margin-top : auto" id="create">Create</button>
+        <hr />
+        <button class="form-control btn-success " style="margin-top : auto" id="create" value="Upload" type="button">Create</button>
     </div>
-    
+    <a href="~/Member/MemberList">กลับสู่หน้าหลัก</a>
 </div>
 <script>
-    
-    $('#create').click(function () {
-        var model = {
-            BlogTitle: $('#title').val(),
-            BlogBannerURL: $('#banner').val(),
-            BlogDetail: $('#detail').val(),
-            CreateDate: $('#dateTime').val(),
-            CreateByID: $('#byId').val(),
-        }
-        if (model.BlogTitle != "" && model.CreateDate != "") {
-            $.ajax({
-                type: 'POST',
-                url: '/Blog/bindSave',
-                data: JSON.stringify(model),
-                datatype: "json",
-                contentType: 'application/json;',
-                traditional: true,
-                async: false,
-                success: function (e) {
-                    alert("success++++****")
-                },
-                error: function (e) {
 
-                }
-            });
-        } else if (model.BlogTitle == "" && model.CreateDate != "") {
+    $('#create').click(function () {
+        var model = new FormData();
+        model.append("postedFile", $('#banner')[0].files[0]);
+        //var data = {
+        //    BlogTitle: $('#title').val(),
+        //    BlogBannerURL: $('#banner').val(),
+        //    BlogDetail: $('#detail').val(),
+        //    CreateDate: $('#dateTime').val(),
+        //    CreateByID: $('#byId').val(),
+        //};
+        model.append("BlogTitle", $('#title').val());
+        model.append("BlogBannerURL", $('#banner').val());
+        model.append("BlogDetail", $('#detail').val());
+        model.append("CreateDate", $('#dateTime').val());
+        model.append("CreateByID", $('#byId').val());
+
+        if ($('#title').val() != '' && $('#dateTime').val() != '') {
+            if ($('#banner').val().includes("png") == true || $('#banner').val().includes("jpg") == true) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Blog/bindSave',
+                    data: model,
+                    datatype: "json",
+                    async: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (e) {
+                        alert("success++++****")
+                        window.location.assign('/Blog/FeedBlog')
+                        console.log(e.data[0].BlogBannerURL)
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                });
+            } else {
+               $('#v3').show() 
+            }
+        } else if ($('#title').val() == '' && $('#dateTime').val() != '') {
             $('#v').show()
-        } else if (model.CreateDate == "" && model.BlogTitle != "") {
+        } else if ($('#title').val() == "" && $('#dateTime').val() != "") {
             $('#v1').show()
-        }
+        } 
         else {
             $('#v').show()
             $('#v1').show()

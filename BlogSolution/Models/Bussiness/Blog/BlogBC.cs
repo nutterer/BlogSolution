@@ -10,18 +10,18 @@ namespace BlogSolution.Models.Bussiness.Blog
 {
     public class BlogBC : BaseBC
     {
-        public List<tnBlog> getBlog(string BlogID = "")
+        public List<view_tnBlog> getBlog(string BlogID = "")
         {
-            var Blog = new List<tnBlog>();
+            var Blog = new List<view_tnBlog>();
             if (!string.IsNullOrEmpty(BlogID))
-                Blog = qDB.tnBlogs.Where(w => w.BlogID == BlogID).ToList();
+                Blog = qDB.view_tnBlog.Where(w => w.BlogID == BlogID).ToList();
             else
-                Blog = qDB.tnBlogs.ToList();
+                Blog = qDB.view_tnBlog.ToList();
 
             return Blog;
         }
 
-        public tnBlog bindSave(tnBlog model  )
+        public tnBlog bindSave(tnBlog model )
         {
             
             var data = new tnBlog();

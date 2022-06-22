@@ -28,9 +28,34 @@
           <Property Name="MemberType" Type="bit" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="250" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db_Blog.dbo.view_tnBlog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_tnBlog">
+          <Key>
+            <PropertyRef Name="BlogID" />
+          </Key>
+          <Property Name="BlogID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BlogTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="BlogBannerURl" Type="nvarchar" MaxLength="500" />
+          <Property Name="BlogDetail" Type="ntext" />
+          <Property Name="CreateByID" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="101" />
+        </EntityType>
         <EntityContainer Name="db_BlogModelStoreContainer">
           <EntitySet Name="tnBlog" EntityType="Self.tnBlog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tnMember" EntityType="Self.tnMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="view_tnBlog" EntityType="Self.view_tnBlog" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [view_tnBlog].[BlogID] AS [BlogID], 
+    [view_tnBlog].[BlogTitle] AS [BlogTitle], 
+    [view_tnBlog].[BlogBannerURl] AS [BlogBannerURl], 
+    [view_tnBlog].[BlogDetail] AS [BlogDetail], 
+    [view_tnBlog].[CreateByID] AS [CreateByID], 
+    [view_tnBlog].[CreateDate] AS [CreateDate], 
+    [view_tnBlog].[MemberName] AS [MemberName]
+    FROM [dbo].[view_tnBlog] AS [view_tnBlog]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -39,6 +64,7 @@
         <EntityContainer Name="db_BlogEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tnMembers" EntityType="db_BlogModel.tnMember" />
           <EntitySet Name="tnBlogs" EntityType="db_BlogModel.tnBlog" />
+          <EntitySet Name="view_tnBlog" EntityType="db_BlogModel.view_tnBlog" />
         </EntityContainer>
         <EntityType Name="tnMember">
           <Key>
@@ -63,6 +89,18 @@
           <Property Name="CreateByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="view_tnBlog">
+          <Key>
+            <PropertyRef Name="BlogID" />
+          </Key>
+          <Property Name="BlogID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BlogTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BlogBannerURl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BlogDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateByID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="MemberName" Type="String" MaxLength="101" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -85,6 +123,19 @@
           <EntitySetMapping Name="tnBlogs">
             <EntityTypeMapping TypeName="db_BlogModel.tnBlog">
               <MappingFragment StoreEntitySet="tnBlog">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateByID" ColumnName="CreateByID" />
+                <ScalarProperty Name="BlogDetail" ColumnName="BlogDetail" />
+                <ScalarProperty Name="BlogBannerURl" ColumnName="BlogBannerURl" />
+                <ScalarProperty Name="BlogTitle" ColumnName="BlogTitle" />
+                <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_tnBlog">
+            <EntityTypeMapping TypeName="db_BlogModel.view_tnBlog">
+              <MappingFragment StoreEntitySet="view_tnBlog">
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CreateByID" ColumnName="CreateByID" />
                 <ScalarProperty Name="BlogDetail" ColumnName="BlogDetail" />

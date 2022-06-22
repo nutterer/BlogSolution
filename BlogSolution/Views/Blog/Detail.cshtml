@@ -1,37 +1,67 @@
-﻿@using database.Database ;
-@using BlogSolution.Models.ModelApp.Base ;
+﻿@using database.Database
+@using BlogSolution.Models.ModelApp.Base
 @{
     ViewBag.Title = "Detail";
-    var Blog = (tnBlog)ViewBag.Blog;
-   
-    var Members = (tnMember)ViewBag.user;
-}
+    var Blog = (view_tnBlog)ViewBag.Blog;
 
+    if (Blog == null)
+    {
+        Blog = new view_tnBlog();
+    }
+
+}
+@*<script>
+    const img = document.getElementById('img');
+
+    const src = img.getAttribute('src');
+
+    if (!src) {
+        console.log('img src is empty');
+    } else {
+        console.log('img src is NOT empty');
+    }
+</script>*@
 <h2 style="text-decoration-style: wavy; text-decoration-line: underline; margin-left: 12px; "> @Blog.BlogTitle</h2>
 
 <div class="container-fluid">
-    <div class="row" style="margin-left: 0" >
-        <img src="@Blog.BlogBannerURl"  style="display: block; margin-left: auto; margin-right: auto; width: 25%; margin-bottom: auto; padding-bottom :50px ;padding-top :50px ; " />
+    <div class="row" style="margin-left: 0">
+        @if (!String.IsNullOrEmpty(Blog.BlogBannerURl))
+        {
+            <img src="@Blog.BlogBannerURl"
+                 id="img"
+                 style="display: block;
+             margin-left: auto;
+             margin-right: auto; width: 25%;
+             margin-bottom: auto;
+             padding-bottom :50px ;
+             padding-top :50px ; " />
+        }
+        else
+        {
+
+        }
     </div>
     <div>
         @Blog.BlogDetail
     </div>
     <div class="row">
-        <h4 style="float:right">Create by</h4> 
-        
+        <h4 style="float:right">Create by</h4>
+
     </div>
     <div class="row">
         @{
-            if (Members != null)
+            if (Blog.MemberName != null && Blog.CreateDate != null)
             {
-                <a style="float:right"> @Members.FirstName | @Blog.CreateDate</a>
+                <a style="float:right"> @Blog.MemberName | @Blog.CreateDate</a>
             }
             else
             {
                 <p style="float:right">User has been delete</p>
             }
         }
+        
 
     </div>
     
+
 </div>

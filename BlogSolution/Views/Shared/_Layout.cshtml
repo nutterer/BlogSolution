@@ -27,12 +27,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("App Blog Soulution", "FeedBlog", "Blog", new { area = "" }, new { @class = "navbar-brand" })
+
             </div>
+            
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("FeedBlog", "FeedBlog", "Blog")</li>
+                    @*<li>@Html.ActionLink("FeedBlog", "FeedBlog", "Blog")</li>*@
                     <li>@Html.ActionLink("CreateBlog", "BlogCreate", "Blog")</li>
+
+                    
 
                     @if (MemberType)
                     {
@@ -40,7 +44,10 @@
                         <li>@Html.ActionLink("MemberCreate", "Register", "Member")</li>
                     }
                 </ul>
-                <button class="btn-danger" id="logout" style="float: right">Logout</button>
+                <ul class=" nav navbar-nav navbar-right" style="margin-right: 115px;">
+                    <li><a>Wellcome @Member.FirstName</a></li>
+                    <li style="float: right">@Html.ActionLink("Logout", "bindlogout", "Member")</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -54,25 +61,6 @@
 
 
     @RenderSection("scripts", required: false)
-    <script>
-    $('#logout').click(() => {
-        $.ajax({
-            type: 'POST',
-            url: '/Member/bindlogout',
-            data: true,
-            datatype: Boolean,
-
-            traditional: true,
-            async: false,
-            success: function (e) {
-                alert("success++++****")
-                window.location.assign('/Member/Login');
-            },
-            error: function (e) {
-
-            }
-        })
-    })
-    </script>
+    
 </body>
 </html>

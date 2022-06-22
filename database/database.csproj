@@ -72,6 +72,9 @@
     <Compile Include="Database\tnMember.cs">
       <DependentUpon>database.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\view_tnBlog.cs">
+      <DependentUpon>database.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

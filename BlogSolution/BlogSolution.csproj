@@ -138,6 +138,7 @@
     <Compile Include="Models\Bussiness\Blog\BlogBC.cs" />
     <Compile Include="Models\Bussiness\Connection\ConnectionBC.cs" />
     <Compile Include="Models\Bussiness\Member\MemberBC.cs" />
+    <Compile Include="Models\FileUploadModel.cs" />
     <Compile Include="Models\ModelApp\Base\BaseModel.cs" />
     <Compile Include="Models\ModelApp\Connection\ConnectionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -166,6 +167,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Uploads\b2b.png" />
+    <Content Include="Uploads\Image 1.png" />
+    <Content Include="Uploads\Image 2.png" />
+    <Content Include="Uploads\Image 4.png" />
+    <Content Include="Uploads\Image 6.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

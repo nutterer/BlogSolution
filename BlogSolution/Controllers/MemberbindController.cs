@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace BlogSolution.Controllers
 {
     public partial class MemberController : BaseController
@@ -58,6 +59,39 @@ namespace BlogSolution.Controllers
 
             var Member = mbc.bindDelete(MemberID);
             return Json(new { data = Member });
+        }
+        public ActionResult checkUserName(string UserName)
+        {
+            var isResult = false;
+            var User =  new List<tnMember>();
+            if (!string.IsNullOrEmpty(UserName))
+                User = mbc.qDB.tnMembers.Where(w => w.UserName == UserName).ToList();
+            
+            if (User.Count > 0)
+                isResult = false;
+            else
+                isResult = true;
+
+            return Json(new { isResult = isResult });
+        }
+        public ActionResult checkUserNameEdit(string UserName , string id)
+        {
+            var isResult = false;
+            var User = new List<tnMember>();
+            if (!string.IsNullOrEmpty(UserName))
+                User = mbc.qDB.tnMembers.Where(w => w.UserName == UserName).ToList();
+
+            //if (User.Membe )
+            //{
+
+            //}
+
+            if (User.Count > 0)
+                isResult = false;
+            else
+                isResult = true;
+
+            return Json(new { isResult = isResult });
         }
     }
 }

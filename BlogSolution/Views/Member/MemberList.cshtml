@@ -1,4 +1,4 @@
-﻿@using database.Database ;
+﻿@using database.Database 
 @{
     ViewBag.Title = "MemberList";
     var Members = (List<tnMember>)ViewBag.Members;
@@ -16,6 +16,7 @@
                 <th scope="col">UserName</th>
                 <th scope="col">Password</th>
                 <th scope="col">userstatus</th>
+                <th scope="col"><a href="~/Member/Register">+</a></th>
             </tr>
         </thead>
         <tbody>
